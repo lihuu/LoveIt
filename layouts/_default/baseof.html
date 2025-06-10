@@ -1,5 +1,3 @@
-{{- if not .Params.noThemeCSS -}}
-
 {{- partial "init.html" . -}}
 
 
@@ -55,10 +53,3 @@
 </body>
 
 </html>
-
-{{- end -}}
-
-
-{{- if .Params.noThemeCSS -}}
-{{- block "content" . }}{{ end -}}
-{{- end -}}
