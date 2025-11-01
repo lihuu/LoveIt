@@ -1,7 +1,9 @@
 {{- define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
 
 {{- define "content" -}}
-{{- $paginator := .Paginate (where .Site.RegularPages "Section" "research") -}}
+{{- $researchPages := where .Site.RegularPages "Section" "research" -}}
+{{- $publishedPages := where $researchPages "Draft" false -}}
+{{- $paginator := .Paginate $publishedPages -}}
 
 <div class="page archive">
     {{- /* Title */ -}}
@@ -44,8 +46,8 @@
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
                 {{- range $index, $tag := . -}}
                 {{- if gt $index 0 }}, {{ end -}}
-                {{- $tagPage := $.Site.GetPage (printf "/tags/%s" ($tag | urlize)) -}}
-                <a href="{{ $tagPage.RelPermalink }}">{{ $tag }}</a>
+                {{- $tagURL := printf "/tags/%s/" ($tag | urlize) -}}
+                <a href="{{ $tagURL }}">{{ $tag }}</a>
                 {{- end -}}
             </div>
             {{- end -}}
