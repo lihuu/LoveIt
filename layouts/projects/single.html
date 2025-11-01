@@ -1,0 +1,153 @@
+{{- define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
+
+{{- define "content" -}}
+{{- $params := .Scratch.Get "params" -}}
+
+<article class="page single project-page">
+    {{- /* Title */ -}}
+    <h1 class="single-title animate__animated animate__flipInX">{{ .Title | emojify }}</h1>
+
+    {{- /* Subtitle */ -}}
+    {{- with $params.subtitle -}}
+    <h2 class="single-subtitle">{{ . }}</h2>
+    {{- end -}}
+
+    {{- /* Project Meta Info */ -}}
+    <div class="project-meta">
+        <div class="project-meta-line">
+            {{- /* Project Status */ -}}
+            {{- with $params.status -}}
+            <span class="project-status status-{{ . }}">
+                <i class="fas fa-circle fa-fw" aria-hidden="true"></i>
+                {{ . | title }}
+            </span>
+            {{- end -}}
+
+            {{- /* Technologies Used */ -}}
+            {{- with $params.technologies -}}
+            <span class="project-technologies">
+                <i class="fas fa-code fa-fw" aria-hidden="true"></i>
+                {{ delimit . ", " }}
+            </span>
+            {{- end -}}
+
+            {{- /* Project Date */ -}}
+            {{- with .Date -}}
+            <span class="project-date">
+                <i class="fas fa-calendar fa-fw" aria-hidden="true"></i>
+                <time datetime="{{ .Format " 2006-01-02" }}">{{ .Format "2006-01-02" }}</time>
+            </span>
+            {{- end -}}
+        </div>
+
+        {{- /* Project Links */ -}}
+        <div class="project-links">
+            {{- with $params.github -}}
+            <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github fa-fw" aria-hidden="true"></i>
+                GitHub
+            </a>
+            {{- end -}}
+
+            {{- with $params.demo -}}
+            <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-external-link-alt fa-fw" aria-hidden="true"></i>
+                Demo
+            </a>
+            {{- end -}}
+
+            {{- with $params.download -}}
+            <a href="{{ . }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-download fa-fw" aria-hidden="true"></i>
+                Download
+            </a>
+            {{- end -}}
+        </div>
+    </div>
+
+    {{- /* Project Featured Image */ -}}
+    {{- with $params.featuredImage -}}
+    <div class="project-featured-image">
+        {{- dict "Src" . "Class" "project-image" "Title" $.Title | partial "plugin/img.html" -}}
+    </div>
+    {{- end -}}
+
+    {{- /* Project Gallery */ -}}
+    {{- with $params.gallery -}}
+    <div class="project-gallery">
+        <h3>{{ T "gallery" | default "Gallery" }}</h3>
+        <div class="gallery-grid">
+            {{- range . -}}
+            <div class="gallery-item">
+                {{- dict "Src" .image "Class" "gallery-image" "Title" .title | partial "plugin/img.html" -}}
+                {{- with .caption -}}
+                <p class="gallery-caption">{{ . }}</p>
+                {{- end -}}
+            </div>
+            {{- end -}}
+        </div>
+    </div>
+    {{- end -}}
+
+    {{- /* Content */ -}}
+    <div class="content" id="content">
+        {{- dict "Content" .Content "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome |
+        partial "function/content.html" | safeHTML -}}
+    </div>
+
+    {{- /* Project Stats */ -}}
+    {{- with $params.stats -}}
+    <div class="project-stats">
+        <h3>{{ T "projectStats" | default "Project Statistics" }}</h3>
+        <div class="stats-grid">
+            {{- range . -}}
+            <div class="stat-item">
+                <div class="stat-value">{{ .value }}</div>
+                <div class="stat-label">{{ .label }}</div>
+            </div>
+            {{- end -}}
+        </div>
+    </div>
+    {{- end -}}
+
+    {{- /* Tags */ -}}
+    {{- with .Params.tags -}}
+    <div class="post-footer" id="post-footer">
+        <div class="post-tags">
+            <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;
+            {{- range $index, $value := . -}}
+            {{- if gt $index 0 }},&nbsp;{{ end -}}
+            {{- $tag := partialCached "function/path.html" $value $value | printf "/tags/%v" | $.Site.GetPage -}}
+            <a href="{{ $tag.RelPermalink }}">{{ $tag.Title }}</a>
+            {{- end -}}
+        </div>
+    </div>
+    {{- end -}}
+
+    {{- /* Footer */ -}}
+    {{- if or (default false .Site.Params.page.share.enable) (default false .Site.Params.comment.enable) -}}
+    <div class="post-footer" id="post-footer">
+        {{- /* Share */ -}}
+        {{- if default false .Site.Params.page.share.enable -}}
+        <div class="post-share">
+            <span>{{ T "share" }}:</span>
+            {{- $share := .Site.Params.page.share -}}
+            {{- $title := .Title -}}
+            {{- $url := .Permalink -}}
+            {{- range $share.networks -}}
+            {{- $network := . -}}
+            {{- with $share.Buttons -}}
+            {{- if in . $network -}}
+            {{- partial (printf "plugin/share/%s.html" $network) (dict "Title" $title "Url" $url) -}}
+            {{- end -}}
+            {{- end -}}
+            {{- end -}}
+        </div>
+        {{- end -}}
+    </div>
+    {{- end -}}
+
+    {{- /* Comment */ -}}
+    {{- partial "comment.html" . -}}
+</article>
+{{- end -}}

@@ -1,0 +1,129 @@
+// Research section specific styles
+.research-posts {
+  margin: 2rem 0;
+
+  .research-item {
+    background: var(--color-bg-secondary);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .research-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+
+      .research-item-title {
+        margin: 0;
+        flex: 1;
+
+        a {
+          color: var(--color-text-primary);
+          text-decoration: none;
+          font-size: 1.25rem;
+          font-weight: 600;
+          line-height: 1.4;
+
+          &:hover {
+            color: var(--color-primary);
+          }
+        }
+      }
+
+      .research-item-date {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+        white-space: nowrap;
+        
+        i {
+          color: var(--color-primary);
+        }
+      }
+    }
+
+
+
+    .research-item-tags {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      margin-top: 0.5rem;
+
+      i {
+        color: var(--color-primary);
+      }
+
+      a {
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        padding: 0.2rem 0.4rem;
+        background: var(--color-bg-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+
+        &:hover {
+          color: var(--color-primary);
+          background: rgba(var(--color-primary-rgb), 0.1);
+        }
+      }
+    }
+  }
+}
+
+.archive-description {
+  color: var(--color-text-secondary);
+  font-weight: normal;
+  margin: 1rem 0 2rem;
+  text-align: center;
+}
+
+.archive-content {
+  margin: 2rem 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.research-empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--color-text-secondary);
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .research-posts {
+    .research-item {
+      padding: 1rem;
+
+      .research-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+
+        .research-item-date {
+          align-self: flex-end;
+        }
+      }
+
+      .research-item-tags {
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

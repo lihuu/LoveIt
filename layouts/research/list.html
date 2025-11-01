@@ -1,0 +1,64 @@
+{{- define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
+
+{{- define "content" -}}
+    {{- $paginator := .Paginate (where .Site.RegularPages "Section" "research") -}}
+    
+    <div class="page archive">
+        {{- /* Title */ -}}
+        <h2 class="single-title animate__animated animate__pulse animate__faster">
+            {{- .Title -}}
+        </h2>
+
+        {{- /* Subtitle */ -}}
+        {{- with .Params.description -}}
+            <h3 class="archive-description">{{ . }}</h3>
+        {{- end -}}
+
+        {{- /* Content */ -}}
+        {{- with .Content -}}
+            <div class="archive-content">
+                {{- . | safeHTML -}}
+            </div>
+        {{- end -}}
+
+        {{- /* Research Posts */ -}}
+        {{- if gt (len $paginator.Pages) 0 -}}
+            <div class="research-posts">
+                {{- range $paginator.Pages -}}
+                    <div class="research-item">
+                        <div class="research-item-header">
+                            <h3 class="research-item-title">
+                                <a href="{{ .RelPermalink }}">{{ .Title | emojify }}</a>
+                            </h3>
+                            
+                            {{- with .Date -}}
+                                <div class="research-item-date">
+                                    <i class="fas fa-calendar fa-fw" aria-hidden="true"></i>
+                                    <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>
+                                </div>
+                            {{- end -}}
+                        </div>
+
+                        {{- with .Params.tags -}}
+                            <div class="research-item-tags">
+                                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
+                                {{- range $index, $tag := . -}}
+                                    {{- if gt $index 0 }}, {{ end -}}
+                                    {{- $tagPage := $.Site.GetPage (printf "/tags/%s" ($tag | urlize)) -}}
+                                    <a href="{{ $tagPage.RelPermalink }}">{{ $tag }}</a>
+                                {{- end -}}
+                            </div>
+                        {{- end -}}
+                    </div>
+                {{- end -}}
+            </div>
+
+            {{- /* Pagination */ -}}
+            {{- partial "paginator.html" . -}}
+        {{- else -}}
+            <div class="research-empty">
+                <p>暂无研究文章</p>
+            </div>
+        {{- end -}}
+    </div>
+{{- end -}}
