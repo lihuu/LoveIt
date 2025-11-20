@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrS+H/h/gU3JkK8K7M+9cM1Xz9E2F6wz+tY8C8M4qU6o2J8xM3xXy9Gq5u9I7C7D0" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-NqFm6Wv8Y6p5Y+u79I6f5R6Q9R3b7G+Q+o6s6Zq8R/d7A7+P1P1v4Gq3J8Q09g9Z" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-qJ2Jt49B7t3g/Yv5TfXb0z/Xn/n6P/W7n/M+8H4z8zD+E7G9e7P1R3j3J+K/D8G" crossorigin="anonymous" onload="renderMathInElement(document.body, {
+    // 块级公式分隔符
+    delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '\\[', right: '\\]', display: true},
+    ],
+
+    // 行内公式分隔符
+    ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
+    // 在 Hugo Markdown 中，最推荐使用 $...$ 或 \(...\) 作为行内公式分隔符
+    // 但 KaTeX 默认推荐使用 \(...\) 因为 $...$ 容易与普通文本中的美元符号冲突。
+    // 如果您习惯使用 $...$，请取消注释下一行：
+    // {left: '$', right: '$', display: false},
+    {left: '\\(', right: '\\)', display: false}
+});"></script>
